@@ -3,21 +3,21 @@ import type { ReactNode } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 interface ProtectedRouteProps {
-    children: ReactNode
+    children: ReactNode;
 }
 
-const ProtectedRoute : React.FC<ProtectedRouteProps> = ({children}) => {
-    const {user} = useAuth();
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+    const { user, loading } = useAuth();
 
-    if(!user) {
-        return <Navigate to="/loggain" replace />
+    if (loading) {
+        return <p>Laddar...</p>; 
     }
 
-    return (
-        <>
-            {children}
-        </>
-        
-    )
-}
+    if (!user) {
+        return <Navigate to="/loggain" replace />;
+    }
+
+    return <>{children}</>;
+};
+
 export default ProtectedRoute;

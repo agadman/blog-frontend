@@ -7,15 +7,15 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const {login, user} = useAuth();
+  const {login, user, loading} = useAuth();
   const navigate = useNavigate();
 
   // Kontrollerar användare
-  useEffect(() => {
-    if(user) {
+    useEffect(() => {
+    if (!loading && user) {
       navigate("/minblogg");
     }
-  }, [user])
+  }, [user, loading]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

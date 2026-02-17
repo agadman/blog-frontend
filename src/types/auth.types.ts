@@ -16,7 +16,8 @@ export interface AuthResponse {
 }
 
 export interface AuthContextType {
-    user: User | null,
+    user: User | null;
     login: (credentials: LoginCredentials) => Promise<void>;
     logout: () => void;
+    loading: boolean;
 }

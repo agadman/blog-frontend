@@ -1,7 +1,11 @@
+import { useAuth } from '../context/AuthContext';
 
 const MyBlog = () => {
+  const {user} = useAuth();
   return (
-    <div>Den här sidan kräver autentisering för att komma åt.</div>
+    <div>
+      <h1>Hej och välkommen {user ? user.username : ""}</h1>
+    </div>
   )
 }
 

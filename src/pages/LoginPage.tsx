@@ -1,13 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const {login, user} = useAuth();
+  const navigate = useNavigate();
+
+  // Kontrollerar användare
+  useEffect(() => {
+    if(user) {
+      navigate("/minblogg");
+    }
+  }, [user])
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
+
+    try {
+      await login({email, password});
+      navigate("/minblogg");
+    } catch(error) {
+      setError("Inloggningen misslyckades. Kontrollera att du angett rätt epost och lösenord." + error)
+    }
   }
 
   return (

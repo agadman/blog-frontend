@@ -1,7 +1,9 @@
 
 const HomePage = () => {
   return (
-    <div>Startsidan i applikationen</div>
+    <>
+      <div>Startsidan i applikationen</div>
+    </>
   )
 }
 

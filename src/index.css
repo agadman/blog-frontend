@@ -1,0 +1,32 @@
+/* klistrar in en lite enkel css resets i denna fil */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;  
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;           
+  font-family: 'Arial', sans-serif;
+  line-height: 1.5;
+  background-color: #fff;
+  color: #000;
+}
+
+ul {
+  list-style: none;     
+}
+
+a {
+  text-decoration: none;   
+  color: inherit;          
+}
+
+button {
+  font: inherit;       
+  cursor: pointer;
+  border: none;
+  background: none;
+}

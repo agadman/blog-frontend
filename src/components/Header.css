@@ -1,0 +1,62 @@
+.header {
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #fff;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;    
+  gap: 0.5rem;          
+}
+
+.logo {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400;       
+  font-size: 2.5rem;
+  color: #555;        
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column; 
+  gap: 0.5rem;
+  align-items: center;   
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li a,
+.logout-btn {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  padding: 0.25rem 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-links li a:hover,
+.logout-btn:hover {
+  color: #000;
+}
+
+.nav-links li a.active {
+  border-bottom: 2px solid #222;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    flex-direction: row;  
+    gap: 2rem;             
+  }
+}

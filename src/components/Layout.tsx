@@ -1,15 +1,17 @@
 import Header from './Header'
+import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
+import './Layout.css';
 
 const Layout = () => {
   return (
-    <>
+    <div className="layout">
         <Header />
-        <main>
+        <main className="main">
             <Outlet />
         </main>
-        <footer>Här ska jag lägga in en sidfot</footer>
-    </>
+        <Footer />
+    </div>
   )
 }
 

@@ -11,6 +11,9 @@ const Header = () => {
         <ul>
             <li><NavLink to="/">Startsidan</NavLink></li>
             <li><NavLink to="/blogg">Blogg</NavLink></li>
+            {user && (
+              <li><NavLink to="/minblogg">Min blogg</NavLink></li>
+            )}
             <li>
               {
                 !user ? <NavLink to="/loggain">Logga in</NavLink> : <button onClick={logout}>Logga ut</button>

@@ -1,0 +1,50 @@
+.post-wrapper {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+  font-size: 0.85rem;
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: #000;
+}
+
+.single-post {
+  background: #fff;
+  padding: 2rem 1.8rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+}
+
+.single-post h1 {
+  font-size: 2rem;
+  margin-bottom: 0.6rem;
+}
+
+.meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: #777;
+  margin-bottom: 1.5rem;
+}
+
+.content {
+  line-height: 1.75;
+  font-size: 1rem;
+  color: #333;
+  white-space: pre-wrap;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 3rem;
+}

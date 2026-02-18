@@ -13,11 +13,14 @@ export interface BlogPost {
 
 interface BlogState {
   posts: BlogPost[];
+  selectedPost: BlogPost | null;
   loading: boolean;
   error: string | null;
 
   fetchAll: () => Promise<void>;
   fetchMine: () => Promise<void>;
+  fetchById: (id: string) => Promise<void>;
+  clearSelected: () => void;
   createPost: (title: string, content: string) => Promise<void>;
   deletePost: (id: string) => Promise<void>;
 }
@@ -26,6 +29,7 @@ export const useBlogStore = create<BlogState>((set, get) => ({
   posts: [],
   loading: false,
   error: null,
+  selectedPost: null,
 
   fetchAll: async () => {
     set({ loading: true });
@@ -44,16 +48,31 @@ fetchMine: async () => {
   set({ loading: true });
   try {
     const res = await fetch("http://localhost:5001/blogposts/mine", {
-      credentials: "include" // cookies för auth
+      credentials: "include" 
     });
     const data = await res.json();
-    set({ posts: data, error: null }); // här får du bara egna inlägg
+    set({ posts: data, error: null });
   } catch {
     set({ error: "Kunde inte hämta dina bloggar" });
   } finally {
     set({ loading: false });
   }
 },
+
+fetchById: async (id) => {
+  set({ loading: true });
+  try {
+    const res = await fetch(`http://localhost:5001/blogposts/${id}`);
+    const data = await res.json();
+    set({ selectedPost: data, error: null });
+  } catch {
+    set({ error: "Kunde inte hämta inlägget" });
+  } finally {
+    set({ loading: false });
+  }
+},
+
+clearSelected: () => set({ selectedPost: null }),
 
   createPost: async (title, content) => {
     await fetch("http://localhost:5001/blogposts", {

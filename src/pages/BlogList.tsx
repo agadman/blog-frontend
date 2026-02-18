@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useBlogStore } from "../stores/blogStore";
+import { NavLink } from "react-router-dom";
 import "./BlogList.css";
 
 const BlogList = () => {
@@ -17,17 +18,27 @@ const BlogList = () => {
 
       <div className="blog-grid">
         {posts.map(p => (
-          <article className="blog-card" key={p._id}>
-            <h2>{p.title}</h2>
-            <p className="excerpt">{p.content}</p>
+          <NavLink
+            to={`/blogg/${p._id}`}
+            key={p._id}
+            className="blog-link"
+          >
+            <article className="blog-card">
+              <h2>{p.title}</h2>
+              <p className="excerpt">
+                {p.content.length > 120
+                  ? p.content.slice(0, 120) + "…"
+                  : p.content}
+              </p>
 
-            <div className="meta">
-              <span>Av {p.author.username}</span>
-              <span>
-                {new Date(p.createdAt).toLocaleDateString("sv-SE")}
-              </span>
-            </div>
-          </article>
+              <div className="meta">
+                <span>Av {p.author.username}</span>
+                <span>
+                  {new Date(p.createdAt).toLocaleDateString("sv-SE")}
+                </span>
+              </div>
+            </article>
+          </NavLink>
         ))}
       </div>
     </section>

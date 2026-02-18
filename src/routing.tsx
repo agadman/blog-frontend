@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import RegisterPage from './pages/RegisterPage';
+import BlogPostPage from './pages/BlogPostPage';
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
             {
                 path: "/blogg",
                 element: <BlogList />
+            },
+            {
+                path: "/blogg/:id",
+                element: <BlogPostPage />
             },
             {
                 path: "/minblogg",

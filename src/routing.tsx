@@ -5,6 +5,7 @@ import MyBlog from './pages/MyBlog';
 import Layout from './components/Layout';
 import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import RegisterPage from './pages/RegisterPage';
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: "/loggain",
                 element: <LoginPage />
+            },
+            { 
+                path: "/registrera",
+                element: <RegisterPage /> 
             }
         ]
     }

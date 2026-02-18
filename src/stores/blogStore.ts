@@ -40,20 +40,20 @@ export const useBlogStore = create<BlogState>((set, get) => ({
     }
   },
 
-  fetchMine: async () => {
-    set({ loading: true });
-    try {
-      const res = await fetch("http://localhost:5001/blogposts", {
-        credentials: "include"
-      });
-      const data = await res.json();
-      set({ posts: data, error: null });
-    } catch {
-      set({ error: "Kunde inte hämta dina bloggar" });
-    } finally {
-      set({ loading: false });
-    }
-  },
+fetchMine: async () => {
+  set({ loading: true });
+  try {
+    const res = await fetch("http://localhost:5001/blogposts/mine", {
+      credentials: "include" // cookies för auth
+    });
+    const data = await res.json();
+    set({ posts: data, error: null }); // här får du bara egna inlägg
+  } catch {
+    set({ error: "Kunde inte hämta dina bloggar" });
+  } finally {
+    set({ loading: false });
+  }
+},
 
   createPost: async (title, content) => {
     await fetch("http://localhost:5001/blogposts", {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
+import './LoginPage.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -10,8 +11,7 @@ const LoginPage = () => {
   const {login, user, loading} = useAuth();
   const navigate = useNavigate();
 
-  // Kontrollerar användare
-    useEffect(() => {
+  useEffect(() => {
     if (!loading && user) {
       navigate("/minblogg");
     }
@@ -25,42 +25,43 @@ const LoginPage = () => {
       await login({email, password});
       navigate("/minblogg");
     } catch(error) {
-      setError("Inloggningen misslyckades. Kontrollera att du angett rätt epost och lösenord." + error)
+      console.error("Login error:", error);
+      setError("Inloggningen misslyckades. Kontrollera att du angett rätt epost och lösenord.");
     }
   }
 
   return (
-    <div>
-      <h1>Logga in</h1>
+    <div className="login-page">
+      <div className="login-card">
+        <h2>Logga in</h2>
+        {error && <div className="error">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>E-post</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-      <form onSubmit={handleSubmit}>
-        {error && (
-            <div>{error}</div>
-        )}
-        <div>
-          <label>E-post</label>
-          <br />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label>Lösenord</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Lösenord</label>
-          <br />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        <button type="submit">Logga in</button>
-      </form>
+          <button type="submit" className="login-btn">Logga in</button>
+        </form>
+        <p className="register-link">
+          Har du inget konto? <NavLink to="/registrera">Registrera dig här</NavLink>
+        </p>
+      </div>
     </div>
   );
 };

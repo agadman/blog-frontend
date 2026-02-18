@@ -7,7 +7,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <h1 className="logo">Hem sidan</h1>
+      <h1 className="logo">BloggHub</h1>
       <nav>
         <ul className="nav-links">
           <li><NavLink to="/" end>Startsidan</NavLink></li>

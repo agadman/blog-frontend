@@ -1,14 +1,14 @@
-import { useAuth } from '../context/AuthContext';
-
+import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { useBlogStore } from "../stores/blogStore";
+import "./MyBlog.css";
 
 const MyBlog = () => {
   const { posts, fetchMine, createPost, deletePost, loading } = useBlogStore();
+  const { user } = useAuth();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const {user} = useAuth();
 
   useEffect(() => {
     fetchMine();
@@ -22,10 +22,14 @@ const MyBlog = () => {
   };
 
   return (
-    <div>
-      <h1>Hej och välkommen {user ? user.username : ""}</h1>
+    <section className="myblog-page">
+      <h1 className="myblog-title">
+        Hej {user?.username}
+      </h1>
 
-      <form onSubmit={handleSubmit}>
+      <form className="new-post" onSubmit={handleSubmit}>
+        <h2>Skapa nytt inlägg</h2>
+
         <input
           placeholder="Titel"
           value={title}
@@ -40,23 +44,34 @@ const MyBlog = () => {
           required
         />
 
-        <button type="submit">Skapa</button>
+        <button type="submit">Publicera</button>
       </form>
 
-      {loading && <p>Laddar...</p>}
+      {loading && <p className="loading">Laddar...</p>}
 
-      <ul>
+      {/* Mina inlägg */}
+      <div className="myblog-grid">
         {posts.map(post => (
-          <li key={post._id}>
+          <article className="myblog-card" key={post._id}>
             <h3>{post.title}</h3>
-            <p>{post.content}</p>
-            <small>{new Date(post.createdAt).toLocaleString()}</small>
-            <br />
-            <button onClick={() => deletePost(post._id)}>Ta bort</button>
-          </li>
+            <p className="excerpt">{post.content}</p>
+
+            <div className="meta">
+              <span>
+                {new Date(post.createdAt).toLocaleDateString("sv-SE")}
+              </span>
+
+              <button
+                className="delete-btn"
+                onClick={() => deletePost(post._id)}
+              >
+                Ta bort
+              </button>
+            </div>
+          </article>
         ))}
-      </ul>
-    </div>
+      </div>
+    </section>
   );
 };
 

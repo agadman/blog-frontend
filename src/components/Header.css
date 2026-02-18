@@ -38,8 +38,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.nav-links li a:hover,
-.logout-btn:hover {
+.nav-links li a:hover {
   color: #000;
 }
 
@@ -48,10 +47,23 @@
 }
 
 .logout-btn {
-  background: none;
+  background: #111;
+  color: #fff;
   border: none;
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
-  font-weight: 500;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.logout-btn:hover {
+  background: #000;
+  transform: translateY(-1px);
+}
+
+.logout-btn:active {
+  transform: translateY(0);
 }
 
 @media (min-width: 768px) {

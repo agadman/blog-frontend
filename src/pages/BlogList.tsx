@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useBlogStore } from "../stores/blogStore";
+import "./BlogList.css";
 
 const BlogList = () => {
   const { posts, fetchAll, loading } = useBlogStore();
@@ -9,19 +10,27 @@ const BlogList = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Alla bloggar</h1>
+    <section className="blog-page">
+      <h1 className="blog-title">Alla bloggar</h1>
 
-      {loading && <p>Laddar...</p>}
+      {loading && <p className="loading">Laddar...</p>}
 
-      {posts.map(p => (
-        <article key={p._id}>
-          <h2>{p.title}</h2>
-          <p>{p.content}</p>
-          <small>Av {p.author.username}</small>
-        </article>
-      ))}
-    </div>
+      <div className="blog-grid">
+        {posts.map(p => (
+          <article className="blog-card" key={p._id}>
+            <h2>{p.title}</h2>
+            <p className="excerpt">{p.content}</p>
+
+            <div className="meta">
+              <span>Av {p.author.username}</span>
+              <span>
+                {new Date(p.createdAt).toLocaleDateString("sv-SE")}
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 };
 

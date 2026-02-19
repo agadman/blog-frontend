@@ -23,6 +23,7 @@ interface BlogState {
   clearSelected: () => void;
   createPost: (title: string, content: string) => Promise<void>;
   deletePost: (id: string) => Promise<void>;
+  updatePost: (id: string, title: string, content: string) => Promise<void>;
 }
 
 export const useBlogStore = create<BlogState>((set, get) => ({
@@ -92,5 +93,16 @@ clearSelected: () => set({ selectedPost: null }),
     });
 
     set({ posts: get().posts.filter(p => p._id !== id) });
-  }
+  },
+
+  updatePost: async (id, title, content) => {
+  await fetch(`http://localhost:5001/blogposts/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ title, content })
+  });
+
+  await get().fetchById(id);
+}
 }));

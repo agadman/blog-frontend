@@ -48,3 +48,37 @@
   text-align: center;
   margin-top: 3rem;
 }
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.actions button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  opacity: 0.9;
+}
+
+.danger {
+  background-color: #d9534f;
+  color: white;
+}
+
+.edit-title {
+  width: 100%;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.edit-content {
+  width: 100%;
+  min-height: 200px;
+  margin-bottom: 1rem;
+}

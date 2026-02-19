@@ -1,5 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { useBlogStore } from "../stores/blogStore";
 import "./MyBlog.css";
 
@@ -49,12 +50,16 @@ const MyBlog = () => {
 
       {loading && <p className="loading">Laddar...</p>}
 
-      {/* Mina inlägg */}
+      {/* Inloggad användares inlägg */}
       <div className="myblog-grid">
         {posts.map(post => (
-          <article className="myblog-card" key={post._id}>
+          <NavLink to={`/blogg/${post._id}`} key={post._id} className="myblog-card link-card">
             <h3>{post.title}</h3>
-            <p className="excerpt">{post.content}</p>
+            <p className="excerpt">
+              {post.content.length > 120
+                ? post.content.slice(0, 120) + "…"
+                : post.content}
+            </p>
 
             <div className="meta">
               <span>
@@ -68,7 +73,7 @@ const MyBlog = () => {
                 Ta bort
               </button>
             </div>
-          </article>
+          </NavLink>
         ))}
       </div>
     </section>

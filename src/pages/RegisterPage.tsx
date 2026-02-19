@@ -10,7 +10,7 @@ const RegisterPage = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const { user, loading } = useAuth();
+  const { user, loading, register } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,24 +25,14 @@ const RegisterPage = () => {
     setSuccess(false);
 
     try {
-      const res = await fetch('http://localhost:5001/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password }),
-        credentials: 'include',
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.message || 'Registreringen misslyckades');
-      }
+      await register({ username, email, password });
 
       setSuccess(true);
       setUsername('');
       setEmail('');
       setPassword('');
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || 'Registreringen misslyckades');
     }
   };
 

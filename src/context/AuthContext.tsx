@@ -29,6 +29,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(data.user); 
   };
 
+  // Registrera ny användare
+  const register = async (credentials: { username: string; email: string; password: string }) => {
+    const res = await fetch(`${API_URL}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.message || "Registreringen misslyckades");
+    }
+
+    // auto-login efter registrering:
+    const data = await res.json();
+    setUser(data.user);
+  };
+
   // Logga ut
   const logout = async () => {
     await fetch(`${API_URL}/auth/logout`, {
@@ -65,7 +84,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, register }}>
       {children}
     </AuthContext.Provider>
   );

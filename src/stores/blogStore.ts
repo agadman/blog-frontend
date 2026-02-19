@@ -1,5 +1,7 @@
 import { create } from "zustand";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export interface BlogPost {
   _id: string;
   title: string;
@@ -35,7 +37,7 @@ export const useBlogStore = create<BlogState>((set, get) => ({
   fetchAll: async () => {
     set({ loading: true });
     try {
-      const res = await fetch("http://localhost:5001/blogposts");
+      const res = await fetch(`${API_URL}/blogposts`);
       const data = await res.json();
       set({ posts: data, error: null });
     } catch {
@@ -48,7 +50,7 @@ export const useBlogStore = create<BlogState>((set, get) => ({
 fetchMine: async () => {
   set({ loading: true });
   try {
-    const res = await fetch("http://localhost:5001/blogposts/mine", {
+    const res = await fetch(`${API_URL}/blogposts/mine`, {
       credentials: "include" 
     });
     const data = await res.json();
@@ -63,7 +65,7 @@ fetchMine: async () => {
 fetchById: async (id) => {
   set({ loading: true });
   try {
-    const res = await fetch(`http://localhost:5001/blogposts/${id}`);
+    const res = await fetch(`${API_URL}/blogposts/${id}`);
     const data = await res.json();
     set({ selectedPost: data, error: null });
   } catch {
@@ -76,7 +78,7 @@ fetchById: async (id) => {
 clearSelected: () => set({ selectedPost: null }),
 
   createPost: async (title, content) => {
-    await fetch("http://localhost:5001/blogposts", {
+    await fetch(`${API_URL}/blogposts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -87,7 +89,7 @@ clearSelected: () => set({ selectedPost: null }),
   },
 
   deletePost: async (id) => {
-    await fetch(`http://localhost:5001/blogposts/${id}`, {
+    await fetch(`${API_URL}/blogposts/${id}`, {
       method: "DELETE",
       credentials: "include"
     });
@@ -96,7 +98,7 @@ clearSelected: () => set({ selectedPost: null }),
   },
 
   updatePost: async (id, title, content) => {
-  await fetch(`http://localhost:5001/blogposts/${id}`, {
+  await fetch(`${API_URL}/blogposts/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     credentials: "include",

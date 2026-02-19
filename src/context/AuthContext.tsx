@@ -8,13 +8,15 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Logga in
   const login = async (credentials: LoginCredentials) => {
-    const res = await fetch("http://localhost:5001/auth/login", {
+    const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
@@ -29,7 +31,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Logga ut
   const logout = async () => {
-    await fetch("http://localhost:5001/auth/logout", {
+    await fetch(`${API_URL}/auth/logout`, {
       method: "POST",
       credentials: "include" 
     });
@@ -39,7 +41,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Kolla session vid reload
   const checkSession = async () => {
   try {
-    const res = await fetch("http://localhost:5001/auth/me", {
+    const res = await fetch(`${API_URL}/auth/me`, {
       method: "GET",
       credentials: "include"
     });

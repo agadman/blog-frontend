@@ -57,14 +57,20 @@ export const useBlogStore = create<BlogState>((set, get) => ({
     set({ loading: true });
     try {
       const res = await fetch(`${API_URL}/blogposts/mine`, {
-        credentials: "include" 
+        credentials: "include"
       });
       const data = await res.json();
-      set({ posts: data, error: null });
-    } catch {
-      set({ error: "Kunde inte hämta dina bloggar" });
+
+      if (Array.isArray(data)) {
+        set({ posts: data, error: null });
+      } else {
+        set({ posts: [], error: data.error || null });
+      }
+    } catch (err) {
+      console.error(err);
+      set({ posts: [], error: "Kunde inte hämta dina bloggar" });
     } finally {
-      set({ loading: false });
+      set({ loading: false }); 
     }
   },
 

@@ -3,6 +3,7 @@ import { useBlogStore } from "../stores/blogStore";
 import { NavLink } from "react-router-dom";
 import "./HomePage.css";
 
+// startside som visar de senaste blogginläggen och en välkomsttext
 const HomePage = () => {
   const { posts, fetchAll, loading } = useBlogStore();
 
@@ -10,6 +11,7 @@ const HomePage = () => {
     fetchAll();
   }, []);
 
+  // Sorterar inläggen efter senaste först och visar de senaste 3
   const latestPosts = [...posts]
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(0, 3);

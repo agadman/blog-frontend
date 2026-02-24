@@ -2,31 +2,34 @@ import { createContext, useState, useContext, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { User, LoginCredentials, AuthContextType } from '../types/auth.types';
 
+// Skapar ett globalt context för autentisering
 const AuthContext = createContext<AuthContextType | null>(null);
 
 interface AuthProviderProps {
-  children: ReactNode;
+  children: ReactNode; // Komponenter som AuthProvider kommer att omsluta
 }
 
+// API URL från miljövariabler
 const API_URL = import.meta.env.VITE_API_URL;
 
+// Provider-komponent som hanterar autentisering och session och omsluter appen
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null); // Håller reda på den inloggade användaren
+  const [loading, setLoading] = useState(true);        // Visar om sessionen fortfarande laddas
 
-  // Logga in
+  // Logga in användare
   const login = async (credentials: LoginCredentials) => {
     const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
-      credentials: "include" 
+      credentials: "include" // skickar/lagrar JWT-cookie för sessionhantering
     });
 
     if (!res.ok) throw new Error("Inloggning misslyckades");
 
     const data = await res.json();
-    setUser(data.user); 
+    setUser(data.user); // Spara användaren i state 
   };
 
   // Registrera ny användare
@@ -43,12 +46,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       throw new Error(data.message || "Registreringen misslyckades");
     }
 
-    // auto-login efter registrering:
+    // auto-login efter registrering
     const data = await res.json();
     setUser(data.user);
   };
 
-  // Logga ut
+  // Logga ut användare
   const logout = async () => {
     await fetch(`${API_URL}/auth/logout`, {
       method: "POST",
@@ -57,7 +60,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(null);
   };
 
-  // Kolla session vid reload
+  // Kontrollerar om användaren redan är inloggad när appen startar
   const checkSession = async () => {
   try {
     const res = await fetch(`${API_URL}/auth/me`, {
@@ -79,6 +82,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 };
 
+  // Körs en gång när appen laddas för att kontrollera sessionen
   useEffect(() => {
     checkSession();
   }, []);
@@ -90,7 +94,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 
-// Hook för att använda AuthContext
+// custom hook för att använda AuthContext i komponenter
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth måste användas inom en AuthProvider");

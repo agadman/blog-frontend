@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import './Header.css';
 
 const Header = () => {
+  // Hämtar inloggad användare och logout-funktion från AuthContext
   const { user, logout } = useAuth();
 
   return (

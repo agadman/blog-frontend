@@ -3,20 +3,24 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate, NavLink } from 'react-router-dom';
 import './LoginPage.css';
 
+// Sida för inloggning där användare kan logga in med e-post och lösen
 const LoginPage = () => {
+  //Lokala state för formulär och felmeddelanden
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const {login, user, loading} = useAuth();
+  const {login, user, loading} = useAuth(); // Hämtar login-funktionen och användarstatus från AuthContext
   const navigate = useNavigate();
 
+  // Om användaren redan är inloggad, navigera direkt till min blogg
   useEffect(() => {
     if (!loading && user) {
       navigate("/minblogg");
     }
   }, [user, loading]);
 
+  // Hanterar formuläret
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');

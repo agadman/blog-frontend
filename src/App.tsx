@@ -1,3 +1,5 @@
+// Denna komponent används inte i projektet
+// Routing och layout hanteras istället via RouterProvider i main.tsx
 
 function App() {
 

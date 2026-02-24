@@ -4,17 +4,21 @@ import { NavLink } from "react-router-dom";
 import { useBlogStore } from "../stores/blogStore";
 import "./MyBlog.css";
 
+// Sida för att visa och hantera inloggad användares egna blogginlägg
 const MyBlog = () => {
   const { posts, fetchMine, createPost, deletePost, loading } = useBlogStore();
-  const { user } = useAuth();
+  const { user } = useAuth(); // Hämta inloggad användare från AuthContext
 
+  // Lokala satate för att hantera nytt inlägg
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  // Hämta användarens egna inlägg när komponenten mountas
   useEffect(() => {
     fetchMine();
   }, []);
 
+  // Hanterar formuläret för att skapa nytt inlägg
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await createPost(title, content);

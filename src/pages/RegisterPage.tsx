@@ -3,22 +3,26 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate, NavLink } from 'react-router-dom';
 import './RegisterPage.css';
 
+// Sida för att registrera en ny användare
 const RegisterPage = () => {
+  // Lokala states för formulär och meddelanden
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const { user, loading, register } = useAuth();
+  const { user, loading, register } = useAuth(); // Auth-funktioner från context
   const navigate = useNavigate();
 
+  // Om användaren redan är inloggad, navigera till dennes blogg
   useEffect(() => {
     if (!loading && user) {
       navigate('/minblogg');
     }
   }, [user, loading]);
 
+  // Hantera formulärsubmiten
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');

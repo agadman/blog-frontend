@@ -4,8 +4,10 @@ import { useBlogStore } from "../stores/blogStore";
 import { useAuth } from "../context/AuthContext";
 import "./BlogPostPage.css";
 
+// Sida för att visa ett enskilt blogginlägg
+// Om man är ägare av inlägget så kan man redigera eller ta bort det
 const BlogPostPage = () => {
-  const { id } = useParams();
+  const { id } = useParams(); // Hämtar id från URL:en
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -18,18 +20,19 @@ const BlogPostPage = () => {
     loading
   } = useBlogStore();
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); // redigeringsläge eller ej
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  // Hämtar inlägget när sidan laddas
   useEffect(() => {
     if (id) fetchById(id);
-    return () => clearSelected();
+    return () => clearSelected(); // rensar inlägget vid unmount
   }, [id]);
 
   if (loading || !selectedPost) return <p>Laddar...</p>;
 
-  const isOwner = user?.id === selectedPost.author._id;
+  const isOwner = user?.id === selectedPost.author._id; // kollar om inloggad är ägare av inlägget
 
   const handleUpdate = async () => {
     if (!id) return;

@@ -16,7 +16,6 @@ Detta projekt är en frontend-applikation för en enkel bloggplattform där anv�
 	•	Fetch API mot backend (Node.js + Hapi + MongoDB)
 	•	Context API för autentisering (AuthContext)
 
-
 ## Publicerad url
 https://elaborate-beijinho-cbb483.netlify.app
 

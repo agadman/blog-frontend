@@ -3,6 +3,8 @@ import { useBlogStore } from "../stores/blogStore";
 import { NavLink } from "react-router-dom";
 import "./BlogList.css";
 
+// Sida som visar alla publika blogginlägg
+// Hämtar blogposts från store vid mount via useEffect
 const BlogList = () => {
   const { posts, fetchAll, loading } = useBlogStore();
 
